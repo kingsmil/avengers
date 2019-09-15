@@ -9,7 +9,7 @@ from discord.voice_client import VoiceClient
 import pyautogui
 from PIL import Image
 import asyncio
-TOKEN = "token"
+TOKEN = "NjIwNTgwNjAzMDM2Njk2NTc5.XXZlzg.TrrGbswpWFhkQrUVPzWJbSmDlHI"
 GUILD = "Self-Help Group For The Criminally Devient"
 
 client = discord.Client()
@@ -19,13 +19,16 @@ async def on_ready():
     for guild in client.guilds:
         if guild.name == GUILD:
             break
+    #to change status
     game = discord.Game("with my uncle in the basement")
     await client.change_presence(status=discord.Status.idle, activity=game)
     print(
         f'{client.user} is connected to the following guild:\n'
         f'{guild.name}(id: {guild.id})'
     )
+    #currently, the reaction feature is hard coded only for a specific discord server
     channelz = discord.utils.get(client.get_all_channels(),guild__name=GUILD,name='avengers')
+    #purges and sends a message along with a reaction
     def is_me(m):
      return m.author == client.user
     deleted = await channelz.purge(limit=100)
@@ -35,7 +38,7 @@ async def on_ready():
     await msg.add_reaction("\U0001f534")
     OPUS_LIBS = ['libopus-0.x86.dll', 'libopus-0.x64.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
 
-
+    #currently is redundant as there is no music feature
     def load_opus_lib(opus_libs=OPUS_LIBS):
         if opus.is_loaded():
            print("opus is working?")
@@ -52,7 +55,7 @@ async def on_ready():
    
    
         
-    
+#gives and removes the "avengers role" upon reaction/ removal of reaction
 @client.event
 async def on_reaction_add(reaction, user):
     print("debug1")
@@ -80,6 +83,7 @@ async def on_reaction_remove(reaction, user):
          await member.remove_roles(test)
 @client.event
 async def on_message(message):
+    #connects the bot to the user's voice channel...
     member = message.author
     if message.author == client.user:
         return
@@ -89,9 +93,11 @@ async def on_message(message):
             channel = message.author.voice.channel
             await channel.connect()
         return
-    if message.content == 'nigger':
+    #kicks player if they do not have the "avengers" role upon saying any word in the list
+    cursedword = ['hand holding','gamersriseup']
+    if message.content in cursedword:
         member = message.author
-        await message.channel.send('please do not say nigger in my chirstian minecraft server you fucking degenerate'+'<@'+str(member.id)+'>')
+        await message.channel.send('please do not say '+message.content+' in my chirstian minecraft server you fucking degenerate'+'<@'+str(member.id)+'>')
         test = discord.utils.get(member.guild.roles, name="avengers")
         if member in test.members:
             await message.channel.send(f'oh sorry, didnt realize you were an {test.name}')
@@ -105,6 +111,7 @@ async def on_message(message):
     if message.content == 'avengers assemble':
         await message.channel.send(f"the world needs you, {test.mention}")
         return
+    #detects a color change on the pixel where the mouse is
     if message.content == 'help me watch hots avengers':
         await message.channel.send("watching")
         im = pyautogui.screenshot()
