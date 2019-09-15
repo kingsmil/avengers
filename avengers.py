@@ -7,11 +7,15 @@ from discord.ext.commands import Bot
 from discord.utils import get
 from discord.voice_client import VoiceClient
 import pyautogui
+import pickle
 from PIL import Image
 import asyncio
 TOKEN = "token"
 GUILD = "Self-Help Group For The Criminally Devient"
-
+#cursedword function
+with open("test.txt", "rb") as fp:   # Unpickling
+     cursedword = pickle.load(fp)
+print(cursedword)
 client = discord.Client()
 print('<@&617381612451135488>')
 @client.event
@@ -94,7 +98,7 @@ async def on_message(message):
             await channel.connect()
         return
     #kicks player if they do not have the "avengers" role upon saying any word in the list
-    cursedword = ['hand holding','gamersriseup']
+    global cursedword
     if message.content in cursedword:
         member = message.author
         await message.channel.send('please do not say '+message.content+' in my chirstian minecraft server you fucking degenerate'+'<@'+str(member.id)+'>')
@@ -123,5 +127,28 @@ async def on_message(message):
               pix = pyautogui.position()
               print("pix")
         await message.channel.send(f"wake the fuck up, {message.author.mention}")
+        return
+    if message.content == '$powerword:cleanse':
+        while len(cursedword)>2:
+            del cursedword[2]
+        with open("test.txt", "wb") as fp:   #Pickling
+                pickle.dump(cursedword, fp)
+            
+    if message.content.startswith('$cursedword'):
+        if len(message.content) == 11:
+           await message.channel.send(cursedword)
+        elif message.content.find(':') != -1:
+           addcword = message.content.split(':',1)[1]
+           if addcword in cursedword:
+               return
+           if len(cursedword) == 100:
+               return
+           await message.channel.send("added "+addcword+" into cursed words")
+           cursedword.append(addcword)
+           with open("test.txt", "wb") as fp:   #Pickling
+                pickle.dump(cursedword, fp)
+           with open("test.txt", "rb") as fp:   # Unpickling
+                cursedword = pickle.load(fp)
+        
         return
 client.run(TOKEN)
