@@ -9,7 +9,7 @@ from discord.voice_client import VoiceClient
 import pyautogui
 from PIL import Image
 import asyncio
-TOKEN = "NjIwNTgwNjAzMDM2Njk2NTc5.XXZlzg.TrrGbswpWFhkQrUVPzWJbSmDlHI"
+TOKEN = "token"
 GUILD = "Self-Help Group For The Criminally Devient"
 
 client = discord.Client()
