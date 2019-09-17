@@ -11,11 +11,15 @@ discord.py bot for experimentation purposes
 ## 2.$cursedword
 
 >$cursedword:[text] in order to add text upon sending to kick the author of the text unless the author has the "avengers role"
+
 >$powerword:cleanse in order to clear cursedwords
+
 >$cursedword in order to view list of current banned text
 
 ## 3.$watch hots
 
 >detects change in pixel at mouse location from original mouse location's pixel color.
+
 >pings the author of message upon detecting change.
+
 >Tested:works when a game pops up
