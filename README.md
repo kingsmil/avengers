@@ -23,3 +23,5 @@ discord.py bot for experimentation purposes
 >pings the author of message upon detecting change.
 
 >Tested:works when a game pops up
+
+>only works for the computer hosting avengers ¯\_(ツ)_/¯
