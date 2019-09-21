@@ -25,3 +25,11 @@ discord.py bot for experimentation purposes
 >Tested:works when a game pops up
 
 >only works for the computer hosting avengers ¯\_(ツ)_/¯
+
+## 4.$rps
+
+>allows for a simple game of rock, paper, sisscors
+
+>Usage:$rps @user
+
+>Note: a user can only be playing RPS with one person at a time.
