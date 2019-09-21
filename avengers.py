@@ -10,7 +10,7 @@ import pyautogui
 import pickle
 from PIL import Image
 import asyncio
-TOKEN = "NjIwNTgwNjAzMDM2Njk2NTc5.XXZlzg.TrrGbswpWFhkQrUVPzWJbSmDlHI"
+TOKEN = "Ntoken"
 GUILD = "Self-Help Group For The Criminally Devient"
 #cursedword function
 with open("test.txt", "rb") as fp:   # Unpickling
