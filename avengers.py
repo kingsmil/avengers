@@ -44,20 +44,13 @@ class Duelrps:
     def logic(self):
         print(self.input1, self.input2)
         if self.input1 == self.input2:
-            await self.channel.send("it was a tie.")
-            duel.remove(self)
-            del self
-            return
-        for i in duel_bible:
-            if (self.input1,self.input2) == duel_bible.items()[i]:
-                await self.channel.send(f"{self.user1},{self.input1} won against {self.user2},{self.input2}")
-                duel.remove(self)
-                del self
-                return
-        await self.channel.send(f"{self.user2},{self.input2} won against {self.user1},{self.input1}")
-        duel.remove(self)
-        break
-        del self
+            return 2
+
+        for key, value in duel_bible.items():
+            if (self.input1,self.input2) == (key ,value):
+                return 3
+        return 4
+    
 @client.event
 async def on_ready():
     for guild in client.guilds:
@@ -137,12 +130,34 @@ async def rps(ctx, arg):
 		if arg != 'r' and arg != 'p' and arg != 's':
 			await ctx.channel.send('r or p or s bruh...')
 			return
+		time.sleep(1)
 		for i in duels:
 			if i.user1 == userx:
 				i.input1 = arg
-				i.logic()
+				if i.input2 == None:
+					await ctx.channel.send("awaiting other user's input")
+					return
+				if i.logic() == 2:
+					await i.channel.send("it's a tie folks")
+				if i.logic() == 3:
+					await i.channel.send(f"{i.user1.name}'s {i.input1} won, against {i.user2.name}'s {i.input2}")
+				if i.logic() == 4:
+					await i.channel.send(f"{i.user1.name}'s {i.input1} lost, against {i.user2.name}'s {i.input2}")
+				duels.remove(i)
+				return
 			if i.user2 == userx:
 				i.input2 = arg
+				if i.input1 == None:
+					await ctx.channel.send("awaiting other user's input")
+					return
+				if i.logic() == 2:
+					await i.channel.send("it's a tie folks")
+				if i.logic() == 3:
+					await i.channel.send(f"{i.user1.name}'s {i.input1} won, against {i.user2.name}'s {i.input2}")
+				if i.logic() == 4:
+					await i.channel.send(f"{i.user1.name}'s {i.input1} lost, against {i.user2.name}'s {i.input2}")
+				duels.remove(i)
+				return
 		await ctx.channel.send("you are not in a duel..")
 		return
 	member1 = await commands.MemberConverter().convert(ctx, arg)
@@ -151,7 +166,7 @@ async def rps(ctx, arg):
 	else:
 		await ctx.channel.send("*$rps @user*")
 		return
-    ##rps
+    ##rps`
 	user1 = ctx.message.author
     ##debugging
 	user2= member1
@@ -163,6 +178,7 @@ async def rps(ctx, arg):
 			await ctx.channel.send("*one of the users is already in a duel*")
 			return
 	await user1.send("Hello, please reply with either an $rps r,p or s.(representing rock,paper and sisscors respectively)")
+	await user2.send("Hello, please reply with either an $rps r,p or s.(representing rock,paper and sisscors respectively)")
 	await ctx.send(f"you have been challenged by {ctx.author.mention}, {member1.mention}. check your DMs")
 	x = Duelrps(user1,user2,ctx.channel)
 	print(x.user1)
@@ -171,6 +187,8 @@ async def rps(ctx, arg):
 async def on_message(message):
     if message.channel.type == discord.ChannelType.private:
         print("debugE")
+        if message.content == '$rps':
+           return
         await client.process_commands(message)
         return
     #connects the bot to the user's voice channel...
