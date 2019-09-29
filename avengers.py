@@ -1,4 +1,4 @@
-# bot.py
+# avengers.py
 import os
 import discord
 import time
@@ -10,22 +10,27 @@ import pyautogui
 import pickle
 from PIL import Image
 import asyncio
-TOKEN = "Ntoken"
-GUILD = "Self-Help Group For The Criminally Devient"
+from dotenv import load_dotenv
+load_dotenv()
+print(os.getenv('DISCORD_TOKEN'))
+TOKEN = os.getenv('DISCORD_TOKEN')
+GUILD = os.getenv('DISCORD_GUILD')
+
 #cursedword function
 with open("test.txt", "rb") as fp:   # Unpickling
      cursedword = pickle.load(fp)
 print(cursedword)
 client = discord.Client()
 client = commands.Bot(command_prefix='$')
-#rps
+#duels list to store users which are in a duel
 duels=[]
-#scenarios when player 1 wins
+#scenarios when user 1 wins
 duel_bible = {
 			"r":"s",
 			"s":"p",
 			"p":"r"
 			}
+#duelrps object for value storage and rock paper sisscors game logic
 class Duelrps:
 
     def __init__(
@@ -41,6 +46,7 @@ class Duelrps:
         self.input1 = input1
         self.input2 = input2
         self.channel = channel
+#logic function in order to decide winner
     def logic(self):
         print(self.input1, self.input2)
         if self.input1 == self.input2:
@@ -118,12 +124,10 @@ async def on_reaction_remove(reaction, user):
          member = user
          test = discord.utils.get(member.guild.roles, name="avengers")
          await member.remove_roles(test)
-@client.command()
-async def test(ctx, arg):
-    print("debug4")
-    await ctx.send(arg)
+#$RPS command
 @client.command()
 async def rps(ctx, arg):
+#checks the channel type in order to tell if user is playing or not
 	if ctx.channel.type == discord.ChannelType.private:
 		print("debugprivate")
 		userx = ctx.channel.recipient
@@ -131,6 +135,7 @@ async def rps(ctx, arg):
 			await ctx.channel.send('r or p or s bruh...')
 			return
 		time.sleep(1)
+		#iterates over duels list in order to find the Duelrps() object which stores the users
 		for i in duels:
 			if i.user1 == userx:
 				i.input1 = arg
@@ -160,6 +165,7 @@ async def rps(ctx, arg):
 				return
 		await ctx.channel.send("you are not in a duel..")
 		return
+#converts arg into member object to use for code
 	member1 = await commands.MemberConverter().convert(ctx, arg)
 	if member1 in ctx.guild.members:
 		pass
@@ -171,6 +177,7 @@ async def rps(ctx, arg):
     ##debugging
 	user2= member1
 	if user1 == user2:
+#to be added
 		await ctx.channel.send("you can't play rps with yourself... but I'll play with you uwu(FEATURE TO BE ADDED)")
 		return
 	for i in duels:
@@ -201,20 +208,8 @@ async def on_message(message):
             channel = message.author.voice.channel
             await channel.connect()
         return
-    #kicks player if they do not have the "avengers" role upon saying any word in the list
     global cursedword
-    if message.content in cursedword:
-        member = message.author
-        await message.channel.send('please do not say '+message.content+' in my chirstian minecraft server you fucking degenerate'+'<@'+str(member.id)+'>')
-        test = discord.utils.get(member.guild.roles, name="avengers")
-        if member in test.members:
-            await message.channel.send(f'oh sorry, didnt realize you were an {test.name}')
-            return
-        for i in range(3):
-            await message.channel.send('be purged in '+str(3-i))
-            time.sleep(1)
-        await member.kick()
-        return
+
     test = discord.utils.get(member.guild.roles, name="avengers")
     if message.content == 'avengers assemble':
         await message.channel.send(f"the world needs you, {test.mention}")
@@ -222,6 +217,10 @@ async def on_message(message):
     #detects a color change on the pixel where the mouse is
     #TODO:PORT CURSED SERIES AND WATCH HOTS INTO COMMANDS
     if message.content == '$watch hots':
+        print(message.author.name)
+        if message.author.name != os.getenv('BOT_OWNER'):
+            await message.channel.send("only the host of the bot is allowed that command")
+            return
         await message.channel.send("watching")
         im = pyautogui.screenshot()
         pix = pyautogui.position()
@@ -256,6 +255,20 @@ async def on_message(message):
                 cursedword = pickle.load(fp)
         
         return
+#kicks user if they say a cursedword unless they are an avenger
+    if message.content in cursedword:
+        member = message.author
+        await message.channel.send('please do not say '+message.content+' in my chirstian minecraft server you fluffing degenerate'+'<@'+str(member.id)+'>')
+        test = discord.utils.get(member.guild.roles, name="avengers")
+        if member in test.members:
+            await message.channel.send(f'oh sorry, didnt realize you were an {test.name}')
+            return
+        for i in range(3):
+            await message.channel.send('be purged in '+str(3-i))
+            time.sleep(1)
+        await member.kick()
+        return
     await client.process_commands(message)
 
 client.run(TOKEN)
+
