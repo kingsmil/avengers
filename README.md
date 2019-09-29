@@ -9,7 +9,7 @@ discord.py bot for experimentation purposes
 >allows user to remove role/add role with ease even without given role mangement permission
 
 ## 2.$cursedword
-
+A feature using the pickle module inorder to store the words in a list
 >$cursedword:[text] in order to add text upon sending to kick the author of the text unless the author has the "avengers role"
 
 >$powerword:cleanse in order to clear all cursedwords
