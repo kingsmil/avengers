@@ -12,11 +12,14 @@ discord.py bot for experimentation purposes
 
 >$cursedword:[text] in order to add text upon sending to kick the author of the text unless the author has the "avengers role"
 
->$powerword:cleanse in order to clear cursedwords
+>$powerword:cleanse in order to clear all cursedwords
 
 >$cursedword in order to view list of current banned text
 
+>limited to a hundred cursed words
+
 ## 3.$watch hots
+A feature using pyautogui and PIL's image capturing features.
 
 >detects change in pixel at mouse location from original mouse location's pixel color.
 
@@ -24,7 +27,7 @@ discord.py bot for experimentation purposes
 
 >Tested:works when a game pops up
 
->only works for the computer hosting avengers ¯\_(ツ)_/¯
+>only works for the host hosting avengers ¯\_(ツ)_/¯
 
 ## 4.$rps
 
