@@ -230,7 +230,7 @@ async def on_message(message):
               im = pyautogui.screenshot()
               pix = pyautogui.position()
               print("pix")
-        await message.channel.send(f"wake the fuck up, {message.author.mention}")
+        await message.channel.send(f"wake the fluff up, {message.author.mention}")
         return
     if message.content == '$powerword:cleanse':
         while len(cursedword)>2:
