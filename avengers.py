@@ -202,7 +202,7 @@ async def on_message(message):
     member = message.author
     if message.author == client.user:
         return
-    if message.content == 'mr stark i dont feel so good':
+    if message.content == 'test123':
         role = discord.utils.get(member.guild.roles,name="avengers")
         if role in message.author.roles:
             channel = message.author.voice.channel
@@ -230,7 +230,7 @@ async def on_message(message):
               im = pyautogui.screenshot()
               pix = pyautogui.position()
               print("pix")
-        await message.channel.send(f"wake the fluff up, {message.author.mention}")
+        await message.channel.send(f"wake up, {message.author.mention}")
         return
     if message.content == '$powerword:cleanse':
         while len(cursedword)>2:
@@ -258,7 +258,7 @@ async def on_message(message):
 #kicks user if they say a cursedword unless they are an avenger
     if message.content in cursedword:
         member = message.author
-        await message.channel.send('please do not say '+message.content+' in my chirstian minecraft server you fluffing degenerate'+'<@'+str(member.id)+'>')
+        await message.channel.send('please do not say '+message.content+' in my server'+'<@'+str(member.id)+'>')
         test = discord.utils.get(member.guild.roles, name="avengers")
         if member in test.members:
             await message.channel.send(f'oh sorry, didnt realize you were an {test.name}')
