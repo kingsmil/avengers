@@ -1,7 +1,6 @@
 # avengers
 
 discord.py bot for experimentation purposes
-![](https://i.kym-cdn.com/photos/images/original/001/384/545/7b9.jpg)
 
 # current features
 
@@ -27,7 +26,7 @@ A feature using pyautogui and PIL's image capturing features.
 
 >Tested:works when a game pops up
 
->only works for the host hosting avengers ¯\_(ツ)_/¯
+>only works for the host hosting avengers
 
 ## 4.$rps
 
